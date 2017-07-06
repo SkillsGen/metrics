@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sign In
+{% endblock %}
+
+{% block main %}
+    <body>
+
+    <div class="container">
+        <div class="row">
+                <div class="col-md-7">
+                    <img src="{{ url_for('static', filename='metrics.jpg') }}"/>
+                </div>
+                <div class="col-md-5">
+                    <div align="right">
+                        <u><a href="{{ url_for('adminlogin') }}">Admin Login</a></u>
+                    </div>
+                    <br>
+                  <form class="form-signin" method="post">
+                    <h3 class="form-signin-heading">Please enter the date of your course and your course code.</h3>
+                    <div class="form-signin" id="datepicker">
+                        <div>
+                            <input type="hidden" name="date" id="date">
+                        </div>
+                      </div>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Code" required>
+                    
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                  </form>
+                </div>
+
+    </div> <!-- /container -->
+      </div>
+
+  </body>
+<script>
+    $('#datepicker div').datepicker({
+        startDate: "+1d",
+        todayHighlight: true
+    }).on('changeDate', function(e){
+      $('#date').val(e.format('dd/mm/yyyy'))
+    }); 
+</script>
+
+{% endblock %}

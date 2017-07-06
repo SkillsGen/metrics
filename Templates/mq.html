@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sign In
+{% endblock %}
+
+{% block main %}
+
+hello
+
+{{ tier }}
+
+{{code}}
+<form class="form" method="post">
+    
+    
+<h1>Your Questionnaire:</h1>
+<hr>
+<form class="form" method="post">
+<ul class="timeline">
+        <li>
+          <div id="q1icon" class="timeline-badge danger"><i id="q1check" class="glyphicon glyphicon-unchecked"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Question 1:</h4>
+                <p>Here is question 1?</p>
+            </div>
+              <hr>
+            <div class="timeline-body">
+                <input name="q1" id="q1" type="text" onchange="tick(1)"/>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-inverted">
+          <div id="q2icon" class="timeline-badge danger"><i id="q2check" class="glyphicon glyphicon-unchecked"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Question 2:</h4>
+                <p>Here is question 2:</p>
+            </div>
+            <div class="timeline-body">
+                <hr>
+              <input name="q2" id="q2" type="text" onchange="tick(2)"/>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div id="q3icon" class="timeline-badge danger"><i id="q3check" class="glyphicon glyphicon-unchecked"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Question 3:</h4>
+                <p>Here is question 3</p>
+            </div>
+            <div class="timeline-body">
+                <hr>
+              <input name="q3" id="q3" type="text" onchange="tick(3)"/>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-inverted">
+        <div id="q4icon" class="timeline-badge danger"><i id="q4check" class="glyphicon glyphicon-unchecked"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Question 4:</h4>
+                <p> Here is question 4</p>
+            </div>
+            <div class="timeline-body">
+                <hr>
+              <input name="q4" id="q4" type="text" onchange="tick(4)"/>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div id="q5icon" class="timeline-badge danger"><i id="q5check" class="glyphicon glyphicon-unchecked"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Question 5</h4>
+                <p> Here is question 5</p>
+            </div>
+            <div class="timeline-body">
+                <hr>
+              <input name="q5" id="q5" type="text" onchange="tick(5)"/>
+            </div>
+          </div>
+        </li>
+        <li class= "timeline-inverted">
+            <div id="q6icon" class="timeline-badge danger"><i id="q6check" class="glyphicon glyphicon-unchecked"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Question 6:</h4>
+                <p>Here is question 6:</p>
+            </div>
+            <div class="timeline-body">
+                <hr>
+               <input name="q6" id="q6" type="text" onchange="tick(6)"/>
+            </div>
+          </div>
+        </li>
+    </ul>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+</form>    
+
+
+    <script>
+        options =  {
+            ticks: [1, 2, 3, 4, 5],
+            ticks_labels: ['1', '2', '3', '4', '5'],
+            value: 1
+        };
+ 
+        var slider = new Slider("#q1", options);
+        var slider = new Slider("#q2", options);
+        var slider = new Slider("#q3", options);
+        var slider = new Slider("#q4", options);
+        var slider = new Slider("#q5", options);
+        var slider = new Slider("#q6", options);
+        
+        function tick(question) {
+            icon = "q" + question + "icon";
+            check = "q" + question + "check";
+            document.getElementById(icon).className = "timeline-badge success";
+            document.getElementById(check).className = "glyphicon glyphicon-check";
+        }
+    </script>
+{% endblock %}

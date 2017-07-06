@@ -5,6 +5,7 @@ from functools import wraps
 from tempfile import gettempdir
 from urllib.parse import urlparse
 from decimal import *
+import passlib.pwd as pwd
 import sqlalchemy
 import os
 import psycopg2
@@ -90,15 +91,35 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
-            return redirect(url_for("login", next=request.url))
+            return "sorry"
         return f(*args, **kwargs)
     return decorated_function
     
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 
 def index(message=""):
-    return "hello World"
+    if request.method == "POST":
+        session["user_id"] = 1
+        session["tier"] = 3
+        return redirect(url_for("mq"))
+    else:
+        return render_template("signin.html")
+    
+@app.route("/adminlogin", methods=["GET", "POST"])
+def adminlogin(message=""):
+    return render_template("adminlogin.html")
 
+
+@app.route("/mq", methods=["GET", "POST"])
+@login_required
+def mq(message=""):
+    if request.method == "POST":
+        var2 = request.form.get("q4")
+        return render_template("mq.html", tier = var2)
+    
+    tier = session['tier']
+    code = pwd.genword(length = 7, charset = "hex")
+    return render_template("mq.html", tier = tier, code = code)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
