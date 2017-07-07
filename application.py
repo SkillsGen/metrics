@@ -99,15 +99,67 @@ def login_required(f):
 
 def index(message=""):
     if request.method == "POST":
-        session["user_id"] = 1
-        session["tier"] = 3
-        return redirect(url_for("mq"))
+        exists = db.execute("SELECT EXISTS(SELECT * FROM bookings WHERE date = :date)",
+                                date = request.form.get("date")
+                                )
+        if exists[0]['exists'] == False:
+            return "booking not found"
+        
+        booking = db.execute("SELECT * FROM bookings WHERE date = :date",
+                                date = request.form.get("date")
+                                )
+        if booking[0]['delcode'] != request.form.get('code'):
+            return "invalid code"
+            
+        if session.get("tier") != 1:
+            session["user_id"] = 9
+            session["tier"] = 3
+        
+        return render_template("mq.html", bookingid = booking[0]['id'], tier = session['tier'])
+        
     else:
         return render_template("signin.html")
     
 @app.route("/adminlogin", methods=["GET", "POST"])
 def adminlogin(message=""):
-    return render_template("adminlogin.html")
+    if request.method == "POST":
+        if not request.form.get("username"):
+            return render_template("adminlogin.html", message = "Username required.")
+        elif not request.form.get("password"):
+            return render_template("adminlogin.html", message = "Password required.")
+        
+        ver = db.execute("SELECT * FROM users WHERE username = :username", username = request.form.get("username"))
+        if len(ver) != 1 or not pwd_context.verify(request.form.get("password"), ver[0]["hash"]):
+            return render_template("adminlogin.html", message = "Incorrect password or nonexistant Username")
+        
+        else:
+            session["user_id"] = ver[0]["id"]
+            session["tier"] = 1
+            return redirect(url_for("admin"))
+            
+        
+    else:
+        if session.get('user_id') != None and session.get('tier') == 1:
+            return redirect(url_for('admin'))
+        
+        return render_template('adminlogin.html')
+    
+
+@app.route("/logout")
+def logout():
+    
+    session.clear()
+
+    return redirect(url_for("index"))
+
+
+@app.route("/admin", methods=["GET"])
+@login_required
+def admin(message=""):
+    if session.get("tier") != 1:
+        return "Unauthorised"
+    else:
+        return render_template("admin.html")
 
 
 @app.route("/mq", methods=["GET", "POST"])

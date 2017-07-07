@@ -25,7 +25,7 @@
                         </div>
                       </div>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Code" required>
+                    <input type="password" name="code" id="code" class="form-control" placeholder="Code" required>
                     
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                   </form>
@@ -40,7 +40,7 @@
         startDate: "+1d",
         todayHighlight: true
     }).on('changeDate', function(e){
-      $('#date').val(e.format('dd/mm/yyyy'))
+      $('#date').val(e.format('yyyy-mm-dd'))
     }); 
 </script>
 
