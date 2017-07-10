@@ -94,9 +94,10 @@ def login_required(f):
             return "sorry"
         return f(*args, **kwargs)
     return decorated_function
-    
-@app.route("/", methods=["GET", "POST"])
 
+
+
+@app.route("/", methods=["GET", "POST"])
 def index(message=""):
     if request.method == "POST":
         exists = db.execute("SELECT EXISTS(SELECT * FROM bookings WHERE date = :date)",
@@ -111,15 +112,17 @@ def index(message=""):
         if booking[0]['delcode'] != request.form.get('code'):
             return "invalid code"
             
-        if session.get("tier") != 1:
-            session["user_id"] = 9
-            session["tier"] = 3
+        if session.get("admin") != 1:
+            session["user_id"] = 0
+            session["admin"] = 0
+            session["bookingid"] = booking[0]['id']
         
-        return render_template("mq.html", bookingid = booking[0]['id'], tier = session['tier'])
+        return redirect(url_for('mq'))
         
     else:
         return render_template("signin.html")
-    
+
+
 @app.route("/adminlogin", methods=["GET", "POST"])
 def adminlogin(message=""):
     if request.method == "POST":
@@ -134,29 +137,28 @@ def adminlogin(message=""):
         
         else:
             session["user_id"] = ver[0]["id"]
-            session["tier"] = 1
+            session["admin"] = 1
             return redirect(url_for("admin"))
             
-        
     else:
-        if session.get('user_id') != None and session.get('tier') == 1:
+        if session.get('user_id') != None and session.get('admin') == 1:
             return redirect(url_for('admin'))
         
         return render_template('adminlogin.html')
     
 
 @app.route("/logout")
+@login_required
 def logout():
     
     session.clear()
-
     return redirect(url_for("index"))
 
 
 @app.route("/admin", methods=["GET"])
 @login_required
 def admin(message=""):
-    if session.get("tier") != 1:
+    if session.get("admin") != 1:
         return "Unauthorised"
     else:
         return render_template("admin.html")
@@ -167,11 +169,14 @@ def admin(message=""):
 def mq(message=""):
     if request.method == "POST":
         var2 = request.form.get("q4")
-        return render_template("mq.html", tier = var2)
+        return render_template("mq.html")
     
-    tier = session['tier']
-    code = pwd.genword(length = 7, charset = "hex")
-    return render_template("mq.html", tier = tier, code = code)
+    elif session['admin'] == 1:
+        return "No questionaire for admin"
+    
+    else:
+        code = pwd.genword(length = 7, charset = "hex")
+        return render_template("mq.html", code = code)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

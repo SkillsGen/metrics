@@ -182,3 +182,22 @@ padding-left:90px;
 .timeline-body {
     text-align: center;
 }
+.timeline-panel.classroom {
+    background-color: #F6D8D9;
+}
+.timeline-panel.instructor {
+    background-color: #C2D8D4;
+}
+.timeline-panel.content {
+    background-color: #CFBDCD;
+}
+.timeline-panel.effective {
+    background-color: #CADECA;
+}
+.timeline-panel.overall {
+    background-color: #F0CBCA;
+}
+.timeline-textarea {
+    resize: none;
+    width: 90%;
+}
