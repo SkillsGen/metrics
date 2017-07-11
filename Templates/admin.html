@@ -7,4 +7,15 @@
 {% block main %}
 admin
 <a href="{{ url_for('logout') }}">Log out</a>
+
+<div id="calendar"></div>
+<script>
+        $('#calendar').fullCalendar({
+            events: "{{ url_for('admin') }}",
+
+            
+        });
+        
+    </script>
+
 {% endblock %}

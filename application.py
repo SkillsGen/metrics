@@ -160,7 +160,29 @@ def logout():
 def admin(message=""):
     if session.get("admin") != 1:
         return "Unauthorised"
-    else:
+    
+    elif request.args.get("start") != None and request.args.get("end") != None:
+        bookings = db.execute("SELECT id, date FROM bookings WHERE date BETWEEN :start AND :end",
+                                start = request.args.get("start"),
+                                end = request.args.get("end")
+                                )
+        
+        calobject = list();
+        for row in bookings:
+            tempdict = {'id': row["id"], 'title': row["id"], 'allDay': 'true', 'start': row["date"]}
+            exists = db.execute("SELECT EXISTS(SELECT id FROM metrics WHERE bookingid = :bookingid)",
+                                bookingid = row["id"]
+                                )
+            if exists[0]['exists'] == False:
+                tempdict['color'] = 'red'
+            else:
+                tempdict['color'] = 'green'
+                
+            calobject.append(tempdict)
+            
+        return jsonify(calobject)
+        
+    else:    
         return render_template("admin.html")
 
 
@@ -168,8 +190,24 @@ def admin(message=""):
 @login_required
 def mq(message=""):
     if request.method == "POST":
-        var2 = request.form.get("q4")
-        return render_template("mq.html")
+        db.execute("INSERT INTO metrics (bookingid, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 , q11, q12) VALUES (:bookingid, :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10 , :q11, :q12)",
+                        bookingid = session.get("bookingid"),
+                        q1 = request.form.get("q1"),
+                        q2 = request.form.get("q2"),
+                        q3 = request.form.get("q3"),
+                        q4 = request.form.get("q4"),
+                        q5 = request.form.get("q5"),
+                        q6 = request.form.get("q6"),
+                        q7 = request.form.get("q7"),
+                        q8 = request.form.get("q8"),
+                        q9 = request.form.get("q9"),
+                        q10 = request.form.get("q10"),
+                        q11 = request.form.get("q11"),
+                        q12 = request.form.get("q12"),
+                        )
+        
+        session.clear()
+        return "Thank you for your feedback"
     
     elif session['admin'] == 1:
         return "No questionaire for admin"
