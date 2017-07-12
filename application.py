@@ -9,6 +9,7 @@ import passlib.pwd as pwd
 import sqlalchemy
 import os
 import psycopg2
+import gviz_api
 
 app = Flask(__name__)
 
@@ -216,6 +217,38 @@ def mq(message=""):
         code = pwd.genword(length = 7, charset = "hex")
         return render_template("mq.html", code = code)
 
+@app.route("/appraisal", methods=["GET", "POST"])
+@login_required
+def appraisal(message=""):    
+    return render_template("appraisal.html", bookingid = session.get("bookingind"))
+
+@app.route("/data", methods=["GET", "POST"])
+@login_required
+def data(message=""):
+    metrics = db.execute("SELECT q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11 FROM metrics WHERE bookingid = 1")
+    
+    schema = [("label", "string"), 
+              ("value", "number")
+             ]
+    
+    data = [["1", 0],
+            ["2", 0],
+            ["3", 0],
+            ["4", 0],
+            ["5", 0],
+           ] 
+    
+    for row in metrics:
+        for val in row.items():
+            i = val[1] -1
+            data[i][1] += 1
+            
+    data_table = gviz_api.DataTable(schema)
+    data_table.LoadData(data)
+        
+    return data_table.ToJSon()
+    
+    
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port,debug=True)
