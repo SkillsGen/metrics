@@ -110,15 +110,28 @@ def index(message=""):
         booking = db.execute("SELECT * FROM bookings WHERE date = :date",
                                 date = request.form.get("date")
                                 )
-        if booking[0]['delcode'] != request.form.get('code'):
-            return "invalid code"
-            
-        if session.get("admin") != 1:
-            session["user_id"] = 0
-            session["admin"] = 0
-            session["bookingid"] = booking[0]['id']
+        if len(request.form.get('code')) == 7:
+            if booking[0]['bookcode'] == request.form.get('code'):
+                if session.get("admin") != 1:
+                    session["user_id"] = 0
+                    session["admin"] = 0
+                    session["bookingid"] = booking[0]['id']
+                return redirect(url_for('appraisal'))
+            else: 
+                return "invalid code"
         
-        return redirect(url_for('mq'))
+        elif len(request.form.get('code')) == 5:
+            if booking[0]['delcode'] == request.form.get('code'):
+                if session.get("admin") != 1:
+                    session["user_id"] = 0
+                    session["admin"] = 0
+                    session["bookingid"] = booking[0]['id']
+                return redirect(url_for('mq'))
+            else:
+                return "invalid code"
+        
+        else:
+            return "invalid code"
         
     else:
         return render_template("signin.html")
@@ -220,35 +233,40 @@ def mq(message=""):
 @app.route("/appraisal", methods=["GET", "POST"])
 @login_required
 def appraisal(message=""):    
-    return render_template("appraisal.html", bookingid = session.get("bookingind"))
+    return render_template("appraisal.html", bookingid = session.get("bookingid"),)
 
 @app.route("/data", methods=["GET", "POST"])
 @login_required
 def data(message=""):
-    metrics = db.execute("SELECT q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11 FROM metrics WHERE bookingid = 1")
-    
-    schema = [("label", "string"), 
-              ("value", "number")
-             ]
-    
-    data = [["1", 0],
-            ["2", 0],
-            ["3", 0],
-            ["4", 0],
-            ["5", 0],
-           ] 
-    
-    for row in metrics:
-        for val in row.items():
-            i = val[1] -1
-            data[i][1] += 1
-            
-    data_table = gviz_api.DataTable(schema)
-    data_table.LoadData(data)
-        
-    return data_table.ToJSon()
-    
-    
+    if request.method == "GET":
+        schema = [("label", "string"), 
+                  ("value", "number")
+                 ]
+
+        data = [["1", 0],
+                ["2", 0],
+                ["3", 0],
+                ["4", 0],
+                ["5", 0],
+               ] 
+        if request.args.get('q') != "None":
+            questions = request.args.get("q")
+            sqlarg = "SELECT " + questions + " FROM metrics WHERE bookingid = :bookingid"
+
+            metrics = db.execute(sqlarg,
+                                        bookingid = session.get('bookingid')
+                                        )
+            for row in metrics:
+                for val in row.items():
+                    i = val[1] - 1
+                    data[i][1] += 1
+
+        data_table = gviz_api.DataTable(schema)
+        data_table.LoadData(data)
+
+        return data_table.ToJSon()
+        #return render_template("test.html", test=questions)
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port,debug=True)
