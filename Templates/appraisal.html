@@ -6,9 +6,9 @@
     <script type="text/javascript">
     
       google.charts.load('current', {'packages':['corechart']});
-      //google.charts.setOnLoadCallback(drawStuff);
+      
 
-      function drawStuff(arg) {
+      function drawStuff(arg, chart) {
           dataurl = "{{ url_for('data')}}?q=" + arg
         var jsonData = $.ajax({
           url: dataurl,
@@ -17,14 +17,14 @@
           }).responseText;
           
         var options = {
-            hAxis: { ticks: [0,2,4,8,10,12,14,16] },
+            hAxis: { ticks: [0,20,40,60,80,100] },
             animation: {"startup": true},
         title: "Appraisal",
       };
       // Create our data table out of JSON data loaded from server.
       var data = new google.visualization.DataTable(jsonData);
 
-        var chart = new google.visualization.BarChart(document.getElementById('top_x_div'));
+        var chart = new google.visualization.BarChart(document.getElementById(chart));
         chart.draw(data, options);
 
       };
@@ -34,62 +34,92 @@
      
       <div class="row">
           
-          <div class="col-md-6">
+          <div class="col-md-8">
               
-                <div id="top_x_div" style="min-height: 500px"></div>
+                <div id="chart1" style="min-height: 500px"></div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
                 <div class="checkbox">
-                    <label><input type="checkbox" id="q1" value="q1">q1</label>
+                    <label><input type="checkbox" id="q1" value="q1">How would you rate the classroom environment?</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="q2" value="q2">q2</label>
+                    <label><input type="checkbox" id="q2" value="q2">How would your rate the instructors knowledge of the subject matter?</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="q3" value="q3">q3</label>
+                    <label><input type="checkbox" id="q3" value="q3">How would you rate the instructors ability to provide real world experiences and examples?</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="q4" value="q4">q4</label>
+                    <label><input type="checkbox" id="q4" value="q4">How would you rate the instructors response to queries?</label>
                 </div>
-                <button onclick="getStuff()">get</button>
-          </div>
-          <div class="col-md-3">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q5" value="q5">q5</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q6" value="q6">q6</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q7" value="q7">q7</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q8" value="q8">q8</label>
-                </div>
-                <button onclick="getStuff()">get</button>
+                <button onclick="getStuff(1,1,4)">get</button>
           </div>
             
+      </div>
+      
+      <div class="row">
+          <div class="col-md-8">
+                <div id="chart2" style="min-height: 500px"></div>
+          </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q5" value="q5">How would you rate the instructors overall performance?</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q6" value="q6">How would you rate the clarity of the training content?</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q7" value="q7">How would you rate the technical depth of the training content?</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q8" value="q8">How would you rate the relevance of the training content to real world examples?</label>
+                </div>
+                <button onclick="getStuff(2,5,8)">get</button>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-8">
+                <div id="chart3" style="min-height: 500px"></div>
+          </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q9" value="q9">How would you rate the knowledge and skills you gained from this training?</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q10" value="q10">How would you rate the impact of this training on your current job and future career potential?</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q11" value="q11">Overall how satisfied where you with this training?</label>
+                </div>
+                <button onclick="getStuff(3,9,11)">get</button>
+          </div>
       </div>
          
       <button onclick="drawStuff('None')">draw</button>
       <p>Session booking id: {{ bookingid }}</p>
       {{ metrics }}
+      {{ responses }}
   </body>
 </html>
 <script>
-    function getStuff() {
+    function getStuff(chart, start, end) {
         arg ="";
         var b = 0;
-        for (var i = 1; i <= 8; i++) {
+        for (var i = 1; i <= end; i++) {
             q = "q" + i;
-            if (document.getElementById(q).checked == true) {
+            if (document.getElementById(q).checked == true && i >= start) {
                 arg = arg + "1"
             }
             else {
                 arg = arg + "0"
             }
         }
-        
-        drawStuff(arg);
+        chart = "chart" + chart;
+        drawStuff(arg,chart);
     }
+    function startStuff() {
+        drawStuff('00000000000',"chart1");
+        drawStuff('00000000000',"chart2");
+        drawStuff('00000000000',"chart3");
+    }
+    google.charts.setOnLoadCallback(startStuff);
 </script>

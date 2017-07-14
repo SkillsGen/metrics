@@ -232,8 +232,11 @@ def mq(message=""):
 
 @app.route("/appraisal", methods=["GET", "POST"])
 @login_required
-def appraisal(message=""):    
-    return render_template("appraisal.html", bookingid = session.get("bookingid"),)
+def appraisal(message=""): 
+    responses = db.execute("SELECT COUNT(*) FROM metrics WHERE bookingid = :bookingid",
+                                bookingid= session.get("bookingid")
+                                )
+    return render_template("appraisal.html", bookingid = session.get("bookingid"), responses = responses[0]['count'])
 
 @app.route("/data", methods=["GET", "POST"])
 @login_required
@@ -260,7 +263,7 @@ def data(message=""):
                 if i == "1":
                     if a != 0:
                         questions = questions + ","
-                    a = 1
+                    a = a + 1
                     questions = questions + "q" + str(j)
             
                 
@@ -273,6 +276,11 @@ def data(message=""):
                 for val in row.items():
                     i = val[1] - 1
                     data[i][1] += 1
+            
+            for val in data:
+                try:
+                    val[1] = val[1] / (len(metrics) * a) * 100
+                except: val[1] = 0
 
         data_table = gviz_api.DataTable(schema)
         data_table.LoadData(data)
