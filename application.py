@@ -250,7 +250,20 @@ def data(message=""):
                 ["5", 0],
                ] 
         if request.args.get('q') != "None":
-            questions = request.args.get("q")
+            qs = request.args.get("q")
+            qs = list(qs)
+            j = 0
+            a = 0
+            questions = ""
+            for i in qs:
+                j = j + 1
+                if i == "1":
+                    if a != 0:
+                        questions = questions + ","
+                    a = 1
+                    questions = questions + "q" + str(j)
+            
+                
             sqlarg = "SELECT " + questions + " FROM metrics WHERE bookingid = :bookingid"
 
             metrics = db.execute(sqlarg,

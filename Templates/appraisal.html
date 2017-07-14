@@ -17,6 +17,7 @@
           }).responseText;
           
         var options = {
+            hAxis: { ticks: [0,2,4,8,10,12,14,16] },
             animation: {"startup": true},
         title: "Appraisal",
       };
@@ -37,7 +38,7 @@
               
                 <div id="top_x_div" style="min-height: 500px"></div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3">
                 <div class="checkbox">
                     <label><input type="checkbox" id="q1" value="q1">q1</label>
                 </div>
@@ -49,6 +50,21 @@
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" id="q4" value="q4">q4</label>
+                </div>
+                <button onclick="getStuff()">get</button>
+          </div>
+          <div class="col-md-3">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q5" value="q5">q5</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q6" value="q6">q6</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q7" value="q7">q7</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="q8" value="q8">q8</label>
                 </div>
                 <button onclick="getStuff()">get</button>
           </div>
@@ -64,14 +80,13 @@
     function getStuff() {
         arg ="";
         var b = 0;
-        for (var i = 1; i <= 4; i++) {
+        for (var i = 1; i <= 8; i++) {
             q = "q" + i;
             if (document.getElementById(q).checked == true) {
-                if (b == 1) {
-                    arg = arg + ",";
-                }
-                arg = arg + q;
-                b = 1;
+                arg = arg + "1"
+            }
+            else {
+                arg = arg + "0"
             }
         }
         
