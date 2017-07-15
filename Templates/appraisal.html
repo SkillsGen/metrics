@@ -1,116 +1,120 @@
 <html>
-  <head>
-      <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"/>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-    
-      google.charts.load('current', {'packages':['corechart']});
-      
-
-      function drawStuff(arg, chart, title) {
-          dataurl = "{{ url_for('data')}}?q=" + arg
-        var jsonData = $.ajax({
-          url: dataurl,
-          dataType: "json",
-          async: false
-          }).responseText;
-          
-        var options = {
-            hAxis: { ticks: [0,20,40,60,80,100], 
-                     title: "Percentage of responses"
-                   },
-            vAxis: { title: "label"},
-            animation: {"startup": true},
-        title: title,
-      };
-      // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.DataTable(jsonData);
-
-        var chart = new google.visualization.BarChart(document.getElementById(chart));
-        chart.draw(data, options);
-
-      };
-    </script>
+    <head>
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"/>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            function drawStuff(arg, chart, title) {
+                dataurl = "{{ url_for('data')}}?q=" + arg
+                var jsonData = $.ajax({
+                    url: dataurl,
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                
+                var options = {
+                    legend: { position: "none" },
+                        hAxis: { 
+                            ticks: [0,20,40,60,80,100], 
+                            title: "Percentage of responses"
+                        },
+                    vAxis: { title: "Rating"},
+                    animation: {"startup": true},
+                    title: title,
+                };
+                
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable(jsonData);
+                var chart = new google.visualization.BarChart(document.getElementById(chart));
+                chart.draw(data, options);
+                };
+        </script>
   </head>
-  <body>
-     <div class="row">
-          
-          <div class="col-md-8">
-              
-                <div id="chart0" style="min-height: 500px"></div>
-          </div>
-         <div class="col-md-4">
-            <p>Session booking id: {{ bookingid }}</p>
-      {{ metrics }}
-      {{ responses }}
-         </div>
-      </div>
-      <div class="row">
-          
-          <div class="col-md-8">
-              
-                <div id="chart1" style="min-height: 500px"></div>
-          </div>
-          <div class="col-md-4">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q1" value="q1">How would you rate the classroom environment?</label>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="chart0" style="min-height: 500px"></div>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q2" value="q2">How would your rate the instructors knowledge of the subject matter?</label>
+                <div class="col-md-4">
+                    <p>Session booking id: {{ bookingid }}</p>
+                    <p>Number of responses: {{ responses }}</p>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q3" value="q3">How would you rate the instructors ability to provide real world experiences and examples?</label>
+            </div>
+            <hr>
+            <div class="row">
+                <h2>Classroom</h2>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q1" value="q1">How would you rate the classroom environment?</label>
+                    </div>
+                    <button onclick="getStuff(1,1,1,'Classroom')">get</button>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q4" value="q4">How would you rate the instructors response to queries?</label>
+                <div class="col-md-8">
+                    <div id="chart1" style="min-height: 500px"></div>
                 </div>
-                <button onclick="getStuff(1,1,4,'Classroom')">get</button>
-          </div>
-            
-      </div>
-      
-      <div class="row">
-          <div class="col-md-8">
-                <div id="chart2" style="min-height: 500px"></div>
-          </div>
-            <div class="col-md-4">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q5" value="q5">How would you rate the instructors overall performance?</label>
+            </div>
+            <div class="row">
+                <h2>Instructor</h2>
+                <div class="col-md-8">
+                    <div id="chart2" style="min-height: 500px"></div>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q6" value="q6">How would you rate the clarity of the training content?</label>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q2" value="q2">How would your rate the instructors knowledge of the subject matter?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q3" value="q3">How would you rate the instructors ability to provide real world experiences and examples?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q4" value="q4">How would you rate the instructors response to queries?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q5" value="q5">How would you rate the instructors overall performance?</label>
+                    </div>
+                    <button onclick="getStuff(2,2,5,'instructor')">get</button>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q7" value="q7">How would you rate the technical depth of the training content?</label>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Content:</h2>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q6" value="q6">How would you rate the clarity of the training content?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q7" value="q7">How would you rate the technical depth of the training content?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q8" value="q8">How would you rate the relevance of the training content to real world examples?</label>
+                    </div>
+                    <button onclick="getStuff(3,6,8, 'Content')">get</button>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q8" value="q8">How would you rate the relevance of the training content to real world examples?</label>
+                <div class="col-md-8">
+                    <div id="chart3" style="min-height: 500px"></div>
                 </div>
-                <button onclick="getStuff(2,5,8,'instructor')">get</button>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-8">
-                <div id="chart3" style="min-height: 500px"></div>
-          </div>
-            <div class="col-md-4">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q9" value="q9">How would you rate the knowledge and skills you gained from this training?</label>
+            </div>
+            <div class="row">
+                <h2>Learning Effectiveness</h2>
+                <div class="col-md-8">
+                    <div id="chart4" style="min-height: 500px"></div>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q10" value="q10">How would you rate the impact of this training on your current job and future career potential?</label>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q9" value="q9">How would you rate the knowledge and skills you gained from this training?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q10" value="q10">How would you rate the impact of this training on your current job and future career potential?</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="q11" value="q11">Overall how satisfied where you with this training?</label>
+                    </div>
+                    <button onclick="getStuff(4,9,11,'Learning Effectiveness:')">get</button>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="q11" value="q11">Overall how satisfied where you with this training?</label>
-                </div>
-                <button onclick="getStuff(3,9,11, 'Content')">get</button>
-          </div>
-      </div>
-         
-      <button onclick="drawStuff('None')">draw</button>
-      
-  </body>
+            </div>
+        </div>
+        <button onclick="drawStuff('None')">draw</button>
+    </body>
 </html>
 <script>
     function getStuff(chart, start, end, title) {
@@ -129,10 +133,11 @@
         drawStuff(arg,chart, title);
     }
     function startStuff() {
-        drawStuff('11111111111',"chart0", "Overall");
-        drawStuff('00000000000',"chart1", "Classroom");
-        drawStuff('00000000000',"chart2", "Instructor");
-        drawStuff('00000000000',"chart3", "Content");
+        drawStuff('11111111111',"chart0", "Overall:");
+        drawStuff('00000000000',"chart1", "Classroom:");
+        drawStuff('00000000000',"chart2", "Instructor:");
+        drawStuff('00000000000',"chart3", "Content:");
+        drawStuff('00000000000',"chart4", "Learning Effectiveness:");
     }
     google.charts.setOnLoadCallback(startStuff);
 </script>

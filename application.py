@@ -281,7 +281,7 @@ def data(message=""):
             for row in metrics:
                 for val in row.items():
                     i = val[1] - 1
-                    j = i + 4 - (2*i)
+                    j = 4 - i
                     data[j][1] += 1
             
             for val in data:
