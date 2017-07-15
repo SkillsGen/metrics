@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" name="code" id="code" class="form-control" placeholder="Code" required>
+                    <input  name="code" id="code" class="form-control" placeholder="Code" required>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                   </form>
                 </div>
@@ -33,8 +33,9 @@
 </body>
 <script>
     $('#datepicker div').datepicker({
-        startDate: "+1d",
-        todayHighlight: true
+        startDate: "-1y",
+        todayHighlight: true,
+        todayBtn: true
     }).on('changeDate', function(e){
       $('#date').val(e.format('yyyy-mm-dd'))
     }); 

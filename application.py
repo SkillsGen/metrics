@@ -232,7 +232,13 @@ def mq(message=""):
 
 @app.route("/appraisal", methods=["GET", "POST"])
 @login_required
-def appraisal(message=""): 
+def appraisal(message=""):
+    if request.args.get("id") != None:
+        if session.get('admin') != 1:
+            return "sorry unauthorised"
+        else:
+            session['bookingid'] = request.args.get("id")
+            
     responses = db.execute("SELECT COUNT(*) FROM metrics WHERE bookingid = :bookingid",
                                 bookingid= session.get("bookingid")
                                 )
@@ -246,11 +252,11 @@ def data(message=""):
                   ("value", "number")
                  ]
 
-        data = [["1", 0],
-                ["2", 0],
-                ["3", 0],
-                ["4", 0],
-                ["5", 0],
+        data = [["Excellent", 0],
+                ["Good", 0],
+                ["Average", 0],
+                ["Below Average", 0],
+                ["Poor", 0],
                ] 
         if request.args.get('q') != "None":
             qs = request.args.get("q")
@@ -275,7 +281,8 @@ def data(message=""):
             for row in metrics:
                 for val in row.items():
                     i = val[1] - 1
-                    data[i][1] += 1
+                    j = i + 4 - (2*i)
+                    data[j][1] += 1
             
             for val in data:
                 try:

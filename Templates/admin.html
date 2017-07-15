@@ -12,7 +12,12 @@ admin
 <script>
         $('#calendar').fullCalendar({
             events: "{{ url_for('admin') }}",
+            eventClick: function(calEvent, jsEvent, view) {
+                link = "{{ url_for('appraisal')}}" + "?id=" + calEvent.id;
+                window.location.href = (link);
 
+            }
+            
             
         });
         

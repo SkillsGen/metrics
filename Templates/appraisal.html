@@ -8,7 +8,7 @@
       google.charts.load('current', {'packages':['corechart']});
       
 
-      function drawStuff(arg, chart) {
+      function drawStuff(arg, chart, title) {
           dataurl = "{{ url_for('data')}}?q=" + arg
         var jsonData = $.ajax({
           url: dataurl,
@@ -17,9 +17,12 @@
           }).responseText;
           
         var options = {
-            hAxis: { ticks: [0,20,40,60,80,100] },
+            hAxis: { ticks: [0,20,40,60,80,100], 
+                     title: "Percentage of responses"
+                   },
+            vAxis: { title: "label"},
             animation: {"startup": true},
-        title: "Appraisal",
+        title: title,
       };
       // Create our data table out of JSON data loaded from server.
       var data = new google.visualization.DataTable(jsonData);
@@ -31,7 +34,18 @@
     </script>
   </head>
   <body>
-     
+     <div class="row">
+          
+          <div class="col-md-8">
+              
+                <div id="chart0" style="min-height: 500px"></div>
+          </div>
+         <div class="col-md-4">
+            <p>Session booking id: {{ bookingid }}</p>
+      {{ metrics }}
+      {{ responses }}
+         </div>
+      </div>
       <div class="row">
           
           <div class="col-md-8">
@@ -51,7 +65,7 @@
                 <div class="checkbox">
                     <label><input type="checkbox" id="q4" value="q4">How would you rate the instructors response to queries?</label>
                 </div>
-                <button onclick="getStuff(1,1,4)">get</button>
+                <button onclick="getStuff(1,1,4,'Classroom')">get</button>
           </div>
             
       </div>
@@ -73,7 +87,7 @@
                 <div class="checkbox">
                     <label><input type="checkbox" id="q8" value="q8">How would you rate the relevance of the training content to real world examples?</label>
                 </div>
-                <button onclick="getStuff(2,5,8)">get</button>
+                <button onclick="getStuff(2,5,8,'instructor')">get</button>
           </div>
       </div>
       <div class="row">
@@ -90,18 +104,16 @@
                 <div class="checkbox">
                     <label><input type="checkbox" id="q11" value="q11">Overall how satisfied where you with this training?</label>
                 </div>
-                <button onclick="getStuff(3,9,11)">get</button>
+                <button onclick="getStuff(3,9,11, 'Content')">get</button>
           </div>
       </div>
          
       <button onclick="drawStuff('None')">draw</button>
-      <p>Session booking id: {{ bookingid }}</p>
-      {{ metrics }}
-      {{ responses }}
+      
   </body>
 </html>
 <script>
-    function getStuff(chart, start, end) {
+    function getStuff(chart, start, end, title) {
         arg ="";
         var b = 0;
         for (var i = 1; i <= end; i++) {
@@ -114,12 +126,13 @@
             }
         }
         chart = "chart" + chart;
-        drawStuff(arg,chart);
+        drawStuff(arg,chart, title);
     }
     function startStuff() {
-        drawStuff('00000000000',"chart1");
-        drawStuff('00000000000',"chart2");
-        drawStuff('00000000000',"chart3");
+        drawStuff('11111111111',"chart0", "Overall");
+        drawStuff('00000000000',"chart1", "Classroom");
+        drawStuff('00000000000',"chart2", "Instructor");
+        drawStuff('00000000000',"chart3", "Content");
     }
     google.charts.setOnLoadCallback(startStuff);
 </script>
