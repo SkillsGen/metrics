@@ -5,31 +5,40 @@
 {% endblock %}
 
 {% block main %}
-<body>
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <div class="row">
-            <div class="col-md-7">
-                <img src="{{ url_for('static', filename='metrics.jpg') }}"/>
-            </div>
-            <div class="col-md-5">
-                <div align="right">
-                    <u><a href="{{ url_for('adminlogin') }}">Admin Login</a></u>
-                </div>
-                <br>
-                <form class="form-signin" method="post">
-                    <h3 class="form-signin-heading">Please enter the date of your course and your course code.</h3>
-                    <div class="form-signin" id="datepicker">
-                        <div>
-                            <input type="hidden" name="date" id="date">
-                        </div>
-                    </div>
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input  name="code" id="code" class="form-control" placeholder="Code" required>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                  </form>
-                </div>
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-left"><img src="{{ url_for('static', filename='logopng.png') }}" width="115px" ></a>
         </div>
-      </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('adminlogin') }}">Admin Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav> 
+<body>
+    <div class="jumbotron jumbotron-fluid"  style="background-image: url({{ url_for('static', filename='metrics-c.jpeg') }})">
+        <div class="forcontent container">
+            <h1 style="letter-spacing: 4px;">Skillsgen Metrics</h1>   
+            <form class="form-signin" method="post">
+                <h4 class="form-signin-heading" style="letter-spacing: 4px;">Please enter the date of your course and your course code.</h4>
+                <div class="form-signin" id="datepicker">
+                    <div>
+                        <input type="hidden" name="date" id="date">
+                    </div>
+                </div>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input  name="code" id="code" class="form-control" placeholder="Code" required style="letter-spacing: 4px; text-align: center">
+                <button class="btn btn-lg btn-primary btn-block" type="submit" style="letter-spacing: 4px;">Sign in</button>
+            </form>
+        </div>
+    </div>    
 </body>
 <script>
     $('#datepicker div').datepicker({
