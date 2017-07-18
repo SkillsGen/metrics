@@ -227,8 +227,11 @@ def mq(message=""):
         return "No questionaire for admin"
     
     else:
+        booking = db.execute("SELECT bookings.id, bookings.date, courses.name AS course, trainers.name AS trainer FROM bookings INNER JOIN courses ON bookings.course=courses.id INNER JOIN trainers ON bookings.trainer=trainers.id WHERE bookings.id = :bookingid",
+                                bookingid = session.get("bookingid")
+                                )
         code = pwd.genword(length = 7, charset = "hex")
-        return render_template("mq.html", code = code)
+        return render_template("mq.html", code = code, booking = booking[0])
 
 @app.route("/appraisal", methods=["GET", "POST"])
 @login_required
@@ -242,7 +245,11 @@ def appraisal(message=""):
     responses = db.execute("SELECT COUNT(*) FROM metrics WHERE bookingid = :bookingid",
                                 bookingid= session.get("bookingid")
                                 )
-    return render_template("appraisal.html", bookingid = session.get("bookingid"), responses = responses[0]['count'])
+    booking = db.execute("SELECT bookings.id, bookings.date, courses.name AS course, trainers.name AS trainer FROM bookings INNER JOIN courses ON bookings.course=courses.id INNER JOIN trainers ON bookings.trainer=trainers.id WHERE bookings.id = :bookingid",
+                                bookingid = session.get("bookingid")
+                                )
+    
+    return render_template("appraisal.html", booking = booking[0], responses = responses[0]['count'])
 
 @app.route("/data", methods=["GET", "POST"])
 @login_required

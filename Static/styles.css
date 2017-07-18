@@ -10,7 +10,7 @@
 }
 
 body {
-  padding-top: 0px;
+  padding-top: 30px;
   padding-bottom: 0px;
     padding-left: 0px;
     padding-right: 0px;
@@ -226,3 +226,25 @@ padding-left:90px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, .6);   
 }
 
+.chartjumbo {
+    margin-right: 0px;
+     padding-bottom: 0px;
+     padding-top: 10px;
+     margin-bottom: 0px;
+     margin-top: 0px;
+}
+.chartjumbo h2 {
+     letter-spacing: 4px;
+}
+
+.left {
+    text-align: center;
+    padding-left: 40px;
+}
+.left hr {
+    border-color:white;
+}
+.right {
+    text-align: center;
+    padding-right: 40px;
+}

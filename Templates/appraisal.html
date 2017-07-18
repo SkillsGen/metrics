@@ -1,11 +1,12 @@
 <html>
     <head>
         <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {'packages':['corechart']});
-            function drawStuff(arg, chart, title) {
+            function drawStuff(arg, chart, title, color) {
                 dataurl = "{{ url_for('data')}}?q=" + arg
                 var jsonData = $.ajax({
                     url: dataurl,
@@ -14,7 +15,7 @@
                 }).responseText;
                 
                 var options = {
-                    
+                    backgroundColor: color,
                     legend: { position: "none" },
                         hAxis: { 
                             ticks: [0,20,40,60,80,100], 
@@ -47,76 +48,113 @@
             
         </script>
   </head>
+    
     <body>
-        <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#top" class="navbar-left"><img src="{{ url_for('static', filename='logopng.png') }}" width="115px" ></a>
+        </div>
+        <ul class="nav navbar-nav">
+      <li><a href="#classroom">Classroom</a></li>
+      <li><a href="#instructor">Instructor</a></li>
+      <li><a href="#content">Content</a></li>
+            <li><a href="#le">Learning Effectiveness</a></li>
+        </ul>
+        
+            <ul class="nav navbar-nav navbar-right">
+    
+                <li><a href="{{ url_for('adminlogin') }}">Admin Login</a></li>
+            </ul>
+        
+    </div>
+</nav> 
+        <div id="overall" class="jumbotron chartjumbo" style="background-color: white">
             <div class="row">
-                <div class="col-md-8" style="border: 1px solid grey">
+                <div class="col-md-8" >
                     <h2 style="text-align: center; margin-bottom: 0px">Overall</h2>
                     <div id="chart0" style="min-height: 400px; margin-top: 0px"></div>
                 </div>
-                <div class="col-md-4">
-                    <p>Session booking id: {{ bookingid }}</p>
+                <div class="col-md-4" style="margin-top: 100px">
+                    
+                    <p>Session booking id: {{ booking.id }}</p>
+                    <p>Date: {{ booking.date }}</p>
+                    <p>Course: {{ booking.course }}</p>
+                    <p>Trainer: {{ booking.trainer }}</p>
+                    
                     <p>Number of responses: {{ responses }}</p>
                 </div>
             </div>
-            
-            <div class="row" style="border: 1px solid grey">
-                <div class="col-md-4">
+        </div>
+        <div id="classroom" class="jumbotron chartjumbo">
+            <div class="row">
+                <div class="col-md-4 left">
                     <h2>Classroom</h2>
                     <hr>
                     <div class="list-group">
-                        <button onclick="btnclk(1,1,1,1,'Classroom')" id="b1" type="button" class="list-group-item active"><b>Q1: </b>How would you rate the classroom environment?</button>
+                        <button onclick="btnclk(1,1,1,1,'Classroom','eee')" id="b1" type="button" class="list-group-item active"><b>Q1: </b>How would you rate the classroom environment?</button>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div id="chart1" style="min-height: 400px; margin-top: 50px"></div>
                 </div>
             </div>
-            <div class="row" style="border: 1px solid grey">        
+        </div>
+        <div id="instructor" class="jumbotron chartjumbo" style="background-color: white">
+            <div class="row">        
                 <div class="col-md-8">
-                    <div id="chart2" style="min-height: 400px; margin-top: 50px"></div>
+                    <div id="chart2" style="min-height: 400px; margin-top: 50px; margin-left: 20px"></div>
                 </div>
-                <div class="col-md-4">
-                    <h2 style="text-align: right">Instructor</h2>
+                <div class="col-md-4 right">
+                    <h2>Instructor</h2>
                     <hr>   
                     <div class="list-group">
-                        <button onclick="btnclk(2,2,2,5,'instructor')" id="b2" type="button" class="list-group-item active"><b>Q2: </b>How would your rate the instructors knowledge of the subject matter?</button>
-                        <button onclick="btnclk(3,2,2,5,'instructor')" id="b3" type="button" class="list-group-item active"><b>Q3: </b>How would you rate the instructors ability to provide real world experiences and examples?</button>
-                        <button onclick="btnclk(4,2,2,5,'instructor')" id="b4" type="button" class="list-group-item active"><b>Q4: </b>How would you rate the instructors response to queries?</button>
-                        <button onclick="btnclk(5,2,2,5,'instructor')" id="b5" type="button" class="list-group-item active"><b>Q5: </b>How would you rate the instructors overall performance?</button>
+                        <button onclick="btnclk(2,2,2,5,'instructor','ffffff')" id="b2" type="button" class="list-group-item active"><b>Q2: </b>How would your rate the instructors knowledge of the subject matter?</button>
+                        <button onclick="btnclk(3,2,2,5,'instructor','ffffff')" id="b3" type="button" class="list-group-item active"><b>Q3: </b>How would you rate the instructors ability to provide real world experiences and examples?</button>
+                        <button onclick="btnclk(4,2,2,5,'instructor','ffffff')" id="b4" type="button" class="list-group-item active"><b>Q4: </b>How would you rate the instructors response to queries?</button>
+                        <button onclick="btnclk(5,2,2,5,'instructor','ffffff')" id="b5" type="button" class="list-group-item active"><b>Q5: </b>How would you rate the instructors overall performance?</button>
                     </div>
                 </div>
             </div>
-            <div class="row" style="border: 1px solid grey">
-                <div class="col-md-4">
+        </div>
+        <div id="content" class="jumbotron chartjumbo">
+            <div class="row" >
+                <div class="col-md-4 left">
                     <h2>Content</h2>
                     <hr>
                     <div class="list-group">
-                        <button onclick="btnclk(6,3,6,8,'content')" id="b6" type="button" class="list-group-item active"><b>Q6: </b>How would you rate the clarity of the training content?</button>
-                        <button onclick="btnclk(7,3,6,8,'content')" id="b7" type="button" class="list-group-item active"><b>Q7: </b>How would you rate the technical depth of the training content?</button>
-                        <button onclick="btnclk(8,3,6,8,'content')" id="b8" type="button" class="list-group-item active"><b>Q8: </b>How would you rate the relevance of the training content to real world examples?</button>
+                        <button onclick="btnclk(6,3,6,8,'content','eee')" id="b6" type="button" class="list-group-item active"><b>Q6: </b>How would you rate the clarity of the training content?</button>
+                        <button onclick="btnclk(7,3,6,8,'content','eee')" id="b7" type="button" class="list-group-item active"><b>Q7: </b>How would you rate the technical depth of the training content?</button>
+                        <button onclick="btnclk(8,3,6,8,'content','eee')" id="b8" type="button" class="list-group-item active"><b>Q8: </b>How would you rate the relevance of the training content to real world examples?</button>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div id="chart3" style="min-height: 400px; margin-top: 50px"></div>
                 </div>
             </div>
-            <div class="row" style="border: 1px solid grey">
+        </div>
+        <div id="le" class="jumbotron chartjumbo" style="background-color: white">
+            <div class="row" >
                 <div class="col-md-8">
                     <div id="chart4" style="min-height: 400px; margin-top: 50px"></div>
                 </div>
-                <div class="col-md-4">
-                    <h2 style="text-align: right">Learning Effectiveness</h2>
+                <div class="col-md-4 right">
+                    <h2>Learning Effectiveness</h2>
                     <hr>
                     <div class="list-group">
-                        <button onclick="btnclk(9,4,9,11,'Learning Effectiveness:')" id="b9" type="button" class="list-group-item active"><b>Q9: </b>How would you rate the knowledge and skills you gained from this training?</button>
-                        <button onclick="btnclk(10,4,9,11,'Learning Effectiveness:')" id="b10" type="button" class="list-group-item active"><b>Q10: </b>How would you rate the impact of this training on your current job and future career potential?</button>
-                        <button onclick="btnclk(11,4,9,11,'Learning Effectiveness:')" id="b11" type="button" class="list-group-item active"><b>Q11: </b>Overall how satisfied where you with this training?</button>
+                        <button onclick="btnclk(9,4,9,11,'Learning Effectiveness:','ffffff')" id="b9" type="button" class="list-group-item active"><b>Q9: </b>How would you rate the knowledge and skills you gained from this training?</button>
+                        <button onclick="btnclk(10,4,9,11,'Learning Effectiveness:','ffffff')" id="b10" type="button" class="list-group-item active"><b>Q10: </b>How would you rate the impact of this training on your current job and future career potential?</button>
+                        <button onclick="btnclk(11,4,9,11,'Learning Effectiveness:','ffffff')" id="b11" type="button" class="list-group-item active"><b>Q11: </b>Overall how satisfied where you with this training?</button>
                     </div>
                 </div>
             </div>
         </div>
-        <button onclick="drawStuff('None')">draw</button>
+        
     </body>
 </html>
 <script>
@@ -136,15 +174,15 @@
         drawStuff(arg,chart, title);
     }
     function startStuff() {
-        drawStuff('11111111111',"chart0", "Overall:");
-        drawStuff('10000000000',"chart1", "Classroom:");
-        drawStuff('01111000000',"chart2", "Instructor:");
-        drawStuff('00000111000',"chart3", "Content:");
-        drawStuff('00000000111',"chart4", "Learning Effectiveness:");
+        drawStuff('11111111111',"chart0", "Overall:", "ffffff");
+        drawStuff('10000000000',"chart1", "Classroom:","eee");
+        drawStuff('01111000000',"chart2", "Instructor:", "ffffff");
+        drawStuff('00000111000',"chart3", "Content:", "eee");
+        drawStuff('00000000111',"chart4", "Learning Effectiveness:", "ffffff");
     }
     google.charts.setOnLoadCallback(startStuff);
     
-    function btnclk(btnno,chart,start,end,title) {
+    function btnclk(btnno,chart,start,end,title,color) {
         btnno = "b" + btnno;
         if (document.getElementById(btnno).className == "list-group-item") {
             document.getElementById(btnno).className = "list-group-item active";
@@ -152,6 +190,6 @@
         else {
             document.getElementById(btnno).className = "list-group-item";
         }
-        getStuff(chart,start,end,title);
+        getStuff(chart,start,end,title,color);
     }
 </script>
