@@ -23,7 +23,7 @@
     </div>
 </nav> 
 <body>
-    <div class="jumbotron jumbotron-fluid"  style="background-image: url({{ url_for('static', filename='metrics-c.jpeg') }})">
+    <div class="jumbotron jumbotron-fluid"  style="background-image: url({{ url_for('static', filename='metrics-c.jpeg') }}); margin-bottom:0px">
         <div class="forcontent container">
             <h1 style="letter-spacing: 4px;">SkillsGen Metrics</h1>   
             <form class="form-signin" method="post">
@@ -40,6 +40,40 @@
         </div>
     </div>    
 </body>
+<div class="jumbotron" style="margin-top: 0px">
+        <div class="row text-center">
+            <div class="col-sm-4" style="padding-left: 30px; padding-right: 0px">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                    <p style="padding-top: 15px">As the delegate, your trainer should provide you with a 5 digit code at the completion of your course. Enter the code along with the date of the course into the form above and you will be taken to your Course Appraisal.</p>
+            </div>
+            <div class="col-sm-4" style="padding-left: 30px; padding-right: 0px">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                    <p style="padding-top: 15px">As the booker of the course, you should have been provided with a 7 digit code. Enter the code along with the date of the course into the form above and you will be taken to a summary of the delegates feedback on the course.</p>
+            </div>
+            <div class="col-sm-4" style="padding-left: 30px; padding-right: 30px">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                <p style="padding-top: 15px">Example delegate code: "<b>d885f</b>".</p>
+                <p>Example booker code: "<b>75e85c2</b>"</p>
+            </div>
+        </div>
+    <hr>
+        <div class="row text-center">
+            <div class="col-sm-6" style="padding-left: 80px; padding-right: 60px">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <p style="padding-top: 15px">Thank you for the opportunity to assist in the development of your staff during this recent training day. We use these evaluations to continuously improve our training for all customers.</p>
+            </div>
+            <div class="col-sm-6"  style="padding-left: 60px; padding-right: 80px">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <p style="padding-top: 15px">Training should be seen as part of a programme of continuous development and we would be delighted to discuss the next steps in the progression of your staff.</p>
+            </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <a href="#top" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up" style="margin-bottom: 20px"></span>
+    </a>
+</footer> 
 <script>
     $('#datepicker div').datepicker({
         startDate: "-1y",

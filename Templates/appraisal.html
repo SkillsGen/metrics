@@ -80,12 +80,9 @@
                     <div id="chart0" style="min-height: 400px; margin-top: 0px"></div>
                 </div>
                 <div class="col-md-4" style="margin-top: 100px">
-                    
-                    <p>Session booking id: {{ booking.id }}</p>
                     <p>Date: {{ booking.date }}</p>
                     <p>Course: {{ booking.course }}</p>
                     <p>Trainer: {{ booking.trainer }}</p>
-                    
                     <p>Number of responses: {{ responses }}</p>
                 </div>
             </div>
@@ -159,7 +156,7 @@
         </div>
         <div class="jumbotron text-center" style="padding-top:10px">
             <a name="etc" class="anchor"></a>
-            <h2>The delegates own overall assessment of the course including any areas of improvement</h2>
+            <h2>The delegates own assessment of the course including any areas of improvement</h2>
             <hr style="border-color: white">
             <div class="row ans">
                 {% for row in q12 %}
