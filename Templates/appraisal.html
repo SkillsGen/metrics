@@ -57,9 +57,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#top" class="navbar-left"><img src="{{ url_for('static', filename='logopng.png') }}" width="115px" ></a>
+                <a href="{{ url_for('index') }}" class="navbar-left"><img src="{{ url_for('static', filename='logopng.png') }}" width="115px" ></a>
             </div>
             <ul class="nav navbar-nav">
+                <li><a href="#top"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
                 <li><a href="#classroom">Classroom</a></li>
                 <li><a href="#instructor">Instructor</a></li>
                 <li><a href="#content">Content</a></li>
@@ -171,20 +172,11 @@
         </div>
         
     </body>
-    
-     <style>
-footer .glyphicon {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: black;
-}
-</style>
 
 <footer class="container-fluid text-center">
-  <a href="#overall" title="To Top">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </a>
-  <p>Page by:</p>
+    <a href="#overall" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up" style="margin-bottom: 20px"></span>
+    </a>
 </footer> 
 </html>
 <script>
