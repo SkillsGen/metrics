@@ -29,6 +29,7 @@ body {
 .form-signin .datepicker {
   margin-left: 23px;
     background-color: black;
+    border-radius: 5px;
     border-color: #2e6da4;
 }
 .form-signin .checkbox {
@@ -247,4 +248,15 @@ padding-left:90px;
 .right {
     text-align: center;
     padding-right: 40px;
+}
+.ans {
+    padding-top: 30px;
+    padding-right:50px;
+    padding-left:50px;
+}
+a.anchor {
+    display: block;
+    position: relative;
+    top: -50px;
+    visibility: hidden;
 }

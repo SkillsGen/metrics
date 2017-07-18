@@ -248,8 +248,11 @@ def appraisal(message=""):
     booking = db.execute("SELECT bookings.id, bookings.date, courses.name AS course, trainers.name AS trainer FROM bookings INNER JOIN courses ON bookings.course=courses.id INNER JOIN trainers ON bookings.trainer=trainers.id WHERE bookings.id = :bookingid",
                                 bookingid = session.get("bookingid")
                                 )
+    q12 = db.execute("SELECT q12 FROM metrics WHERE bookingid = :bookingid",
+                                bookingid = session.get("bookingid"),
+                                )
     
-    return render_template("appraisal.html", booking = booking[0], responses = responses[0]['count'])
+    return render_template("appraisal.html", booking = booking[0], responses = responses[0]['count'], q12 = q12)
 
 @app.route("/data", methods=["GET", "POST"])
 @login_required
