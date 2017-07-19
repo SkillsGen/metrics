@@ -1,0 +1,223 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Metrics
+{% endblock %}
+
+{% block main %}  
+    <div class="jumbotron  text-center" style="background-color: white; padding-top: 00px; padding-bottom: 10px">
+            <div class="row">
+                <a name="overall" class="anchor"></a>
+                <div class="col-md-8" >
+                    <h2> Course Appraisal.</h2>
+                    <p style="margin-left: 30px">Please help us maintain and improve the quality of our training by completing the questions below. Thank you.</p>
+                </div>
+                <div class="col-md-4" style="border-left: 1px solid grey">
+                    <p>Date: {{ booking.date }}</p>
+                    <p>Course: {{ booking.course }}</p>
+                    <p>Trainer: {{ booking.trainer }}</p>
+                </div>
+            </div>
+        </div>
+<hr>
+    <div class="container">
+    <form class="form" method="post">
+        <ul class="timeline">
+            <li>
+                <div id="q1icon" class="timeline-badge danger"><i id="q1check" class="glyphicon glyphicon-unchecked"></i>
+                </div>
+                <div class="timeline-panel classroom">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Classroom</h4>
+                        <p>How would you rate the classroom environment?</p>
+                    </div>
+                    <hr>
+                    <div class="timeline-body">
+                        <input name="q1" id="q1" type="text" onchange="tick(1)"/>
+                    </div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div id="q2icon" class="timeline-badge danger"><i id="q2check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel instructor">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Instructor</h4>
+                        <p>How would your rate the instructors knowledge of the subject matter?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q2" id="q2" type="text" onchange="tick(2)"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="q3icon" class="timeline-badge danger"><i id="q3check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel instructor">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Instructor</h4>
+                        <p>How would you rate the instructors ability to provide real world experiences and examples?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q3" id="q3" type="text" onchange="tick(3)"/>
+                    </div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div id="q4icon" class="timeline-badge danger"><i id="q4check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel instructor">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Instructor</h4>
+                        <p>How would you rate the instructors response to queries?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q4" id="q4" type="text" onchange="tick(4)"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="q5icon" class="timeline-badge danger"><i id="q5check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel instructor">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Instructors</h4>
+                        <p>How would you rate the instructors overall performance?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q5" id="q5" type="text" onchange="tick(5)"/>
+                    </div>
+                </div>
+            </li>
+            <li class= "timeline-inverted">
+                <div id="q6icon" class="timeline-badge danger"><i id="q6check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel content">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Training Content</h4>
+                        <p>How would you rate the clarity of the training content?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q6" id="q6" type="text" onchange="tick(6)"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="q7icon" class="timeline-badge danger"><i id="q7check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel content">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Training Content</h4>
+                        <p>How would you rate the technical depth of the training content?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q7" id="q7" type="text" onchange="tick(7)"/>
+                    </div>
+                </div>
+            </li>
+            <li class= "timeline-inverted">
+                <div id="q8icon" class="timeline-badge danger"><i id="q8check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel content">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Training Content</h4>
+                        <p>How would you rate the relevance of the training content to real world examples?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q8" id="q8" type="text" onchange="tick(8)"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="q9icon" class="timeline-badge danger"><i id="q9check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel effective">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Learning Effectiveness</h4>
+                        <p>How would you rate the knowledge and skills you gained from this training?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q9" id="q9" type="text" onchange="tick(9)"/>
+                    </div>
+                </div>
+            </li>
+            <li class= "timeline-inverted">
+                <div id="q10icon" class="timeline-badge danger"><i id="q10check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel effective">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Learning Effectiveness</h4>
+                        <p>How would you rate the impact of this training on your current job and future career potential?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q10" id="q10" type="text" onchange="tick(10)"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="q11icon" class="timeline-badge danger"><i id="q11check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel overall">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Overall</h4>
+                        <p>Overall how satisfied where you with this training?</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <input name="q11" id="q11" type="text" onchange="tick(11)"/>
+                    </div>
+                </div>
+            </li>
+            <li class= "timeline-inverted">
+                <div id="q12icon" class="timeline-badge danger"><i id="q12check" class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel overall">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Overall</h4>
+                        <p>Please give your overall assessment of the course including any areas of improvement</p>
+                    </div>
+                    <div class="timeline-body">
+                        <hr>
+                        <textarea class="timeline-textarea" rows="6" id="q12" type="text" name="q12" onkeyup="tick(12)"></textarea>
+                        
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div style="text-align: center">
+            <button class="btn btn-lg btn-primary" type="submit">Submit</button>
+        </div>
+</form>    
+</div>
+<hr>
+<footer class="container-fluid text-center">
+    <a href="#top" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up" style="margin-bottom: 20px"></span>
+    </a>
+</footer> 
+    <script>
+        options =  {
+            ticks: [1, 2, 3, 4, 5],
+            ticks_labels: ['1', '2', '3', '4', '5'],
+            value: 1
+        };
+ 
+        var slider = new Slider("#q1", options);
+        var slider = new Slider("#q2", options);
+        var slider = new Slider("#q3", options);
+        var slider = new Slider("#q4", options);
+        var slider = new Slider("#q5", options);
+        var slider = new Slider("#q6", options);
+        var slider = new Slider("#q7", options);
+        var slider = new Slider("#q8", options);
+        var slider = new Slider("#q9", options);
+        var slider = new Slider("#q10", options);
+        var slider = new Slider("#q11", options);
+        
+        
+        function tick(question) {
+            icon = "q" + question + "icon";
+            check = "q" + question + "check";
+            document.getElementById(icon).className = "timeline-badge success";
+            document.getElementById(check).className = "glyphicon glyphicon-check";
+        }
+    </script>
+{% endblock %}
