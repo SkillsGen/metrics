@@ -230,8 +230,7 @@ def mq(message=""):
         booking = db.execute("SELECT bookings.id, bookings.date, courses.name AS course, trainers.name AS trainer FROM bookings INNER JOIN courses ON bookings.course=courses.id INNER JOIN trainers ON bookings.trainer=trainers.id WHERE bookings.id = :bookingid",
                                 bookingid = session.get("bookingid")
                                 )
-        code = pwd.genword(length = 7, charset = "hex")
-        return render_template("mq.html", code = code, booking = booking[0])
+        return render_template("mq.html", booking = booking[0])
 
 @app.route("/appraisal", methods=["GET", "POST"])
 @login_required
