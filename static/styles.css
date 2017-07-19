@@ -229,10 +229,12 @@ padding-left:90px;
 
 .chartjumbo {
     margin-right: 0px;
+    padding-right: 15px;
      padding-bottom: 0px;
      padding-top: 10px;
      margin-bottom: 0px;
      margin-top: 0px;
+    
 }
 .chartjumbo h2 {
      letter-spacing: 4px;
