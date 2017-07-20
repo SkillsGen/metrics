@@ -160,10 +160,12 @@
             <hr style="border-color: white">
             <div class="row ans">
                 {% for row in q12 %}
-                <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-wrench"></span>
-                    <p style="padding-top: 15px">{{ row.q12 }}</p>
-                </div>
+                    {% if row.q12 != '' %}
+                        <div class="col-sm-4">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                            <p style="padding-top: 15px">{{ row.q12 }}</p>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

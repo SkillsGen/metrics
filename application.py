@@ -204,7 +204,7 @@ def admin(message=""):
 @login_required
 def mq(message=""):
     if request.method == "POST":
-        db.execute("INSERT INTO metrics (bookingid, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 , q11, q12) VALUES (:bookingid, :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10 , :q11, :q12)",
+        db.execute("INSERT INTO metrics (bookingid, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 , q11, q12, q13) VALUES (:bookingid, :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10 , :q11, :q12, :q13)",
                         bookingid = session.get("bookingid"),
                         q1 = request.form.get("q1"),
                         q2 = request.form.get("q2"),
@@ -218,6 +218,7 @@ def mq(message=""):
                         q10 = request.form.get("q10"),
                         q11 = request.form.get("q11"),
                         q12 = request.form.get("q12"),
+                        q13 = request.form.get("q13")
                         )
         
         session.clear()

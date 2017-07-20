@@ -182,7 +182,13 @@
                 </div>
             </li>
         </ul>
-        <div style="text-align: center">
+        <div class="last-panel text-center">
+            <h4 style="margin-top:0px">And Finally</h4>
+            <p> Please rate your knowledge and skills before and after the course.</p>
+            <hr>
+            <input id="q13" name="q13" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="[30,70]"/>
+        </div>
+        <div style="text-align: center;padding-top: 20px">
             <button class="btn btn-lg btn-primary" type="submit">Submit</button>
         </div>
 </form>    
@@ -215,6 +221,12 @@
         var slider = new Slider("#q9", options);
         var slider = new Slider("#q10", options);
         var slider = new Slider("#q11", options);
+        
+        options2 = {
+            ticks: [0,10,20,30,40,50,60,70,80,90,100],
+            ticks_labels: ['0%','10%','20%','30%','40%','50%','60%','70%','80%','90%','100%']
+        }
+        var slider = new Slider("#q13", options2)
         
         
         function tick(question) {
