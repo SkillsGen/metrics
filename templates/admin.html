@@ -5,10 +5,32 @@
 {% endblock %}
 
 {% block main %}
-admin
-<a href="{{ url_for('logout') }}">Log out</a>
-
-<div id="calendar"></div>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-left"><img src="{{ url_for('static', filename='logopng.png') }}" width="115px" ></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('logout') }}">Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav> 
+<body>
+    <div>
+        <ul style="color:red;text-align:center;margin-top: 25px">No feedback yet</ul>
+        <ul style="color:green;text-align:center">Feedback received</ul>
+    </div>
+<div class="container" style="margin-top: 5px">
+    <div id="calendar"></div>
+</div>
+    </body>
 <script>
         $('#calendar').fullCalendar({
             events: "{{ url_for('admin') }}",

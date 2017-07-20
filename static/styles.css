@@ -200,7 +200,9 @@ padding-left:90px;
 }
 .timeline-body {
     text-align: center;
+    padding-bottom: 50px;
 }
+
 .timeline-panel.classroom {
     background-color: #F6D8D9;
 }
@@ -261,4 +263,8 @@ a.anchor {
     position: relative;
     top: -50px;
     visibility: hidden;
+}
+.vertical-text {
+	transform: rotate(40deg);
+	transform-origin:20px 30px;
 }

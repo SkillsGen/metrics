@@ -105,7 +105,7 @@ def index(message=""):
                                 date = request.form.get("date")
                                 )
         if exists[0]['exists'] == False:
-            return "booking not found"
+            return "Sorry no booking was found on that date."
         
         booking = db.execute("SELECT * FROM bookings WHERE date = :date",
                                 date = request.form.get("date")
@@ -118,7 +118,7 @@ def index(message=""):
                     session["bookingid"] = booking[0]['id']
                 return redirect(url_for('appraisal'))
             else: 
-                return "invalid code"
+                return "Sorry that code doesn't match."
         
         elif len(request.form.get('code')) == 5:
             if booking[0]['delcode'] == request.form.get('code'):
@@ -128,10 +128,10 @@ def index(message=""):
                     session["bookingid"] = booking[0]['id']
                 return redirect(url_for('mq'))
             else:
-                return "invalid code"
+                return "Sorry that code doesn't match."
         
         else:
-            return "invalid code"
+            return "So that code is not the right length."
         
     else:
         return render_template("signin.html")
@@ -176,14 +176,14 @@ def admin(message=""):
         return "Unauthorised"
     
     elif request.args.get("start") != None and request.args.get("end") != None:
-        bookings = db.execute("SELECT id, date FROM bookings WHERE date BETWEEN :start AND :end",
+        bookings = db.execute("SELECT bookings.id, bookings.date, bookings.course, courses.name AS course FROM bookings INNER JOIN courses ON bookings.course=courses.id WHERE date BETWEEN :start AND :end",
                                 start = request.args.get("start"),
                                 end = request.args.get("end")
                                 )
         
         calobject = list();
         for row in bookings:
-            tempdict = {'id': row["id"], 'title': row["id"], 'allDay': 'true', 'start': row["date"]}
+            tempdict = {'id': row["id"], 'title': row["course"], 'allDay': 'true', 'start': row["date"]}
             exists = db.execute("SELECT EXISTS(SELECT id FROM metrics WHERE bookingid = :bookingid)",
                                 bookingid = row["id"]
                                 )
@@ -263,7 +263,7 @@ def data(message=""):
 
         data = [["Excellent", 0],
                 ["Good", 0],
-                ["Average", 0],
+                ["Satisfactory", 0],
                 ["Below Average", 0],
                 ["Poor", 0],
                ] 

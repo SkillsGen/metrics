@@ -174,7 +174,7 @@
                         <h4 class="timeline-title">Overall</h4>
                         <p>Please give your overall assessment of the course including any areas of improvement</p>
                     </div>
-                    <div class="timeline-body">
+                    <div class="timeline-body" style="padding-bottom: 10px">
                         <hr>
                         <textarea class="timeline-textarea" rows="6" id="q12" type="text" name="q12" onkeyup="tick(12)"></textarea>
                         
@@ -196,8 +196,12 @@
     <script>
         options =  {
             ticks: [1, 2, 3, 4, 5],
-            ticks_labels: ['1', '2', '3', '4', '5'],
-            value: 1
+            ticks_labels: ["<div class='vertical-text'>Poor</div>",
+                           "<div class='vertical-text'>Below Average</div>",
+                           "<div class='vertical-text'>Satisfactory</div>",
+                           "<div class='vertical-text'>Good</div>",
+                           "<div class='vertical-text'>Excellent</div>"],
+            value: 3
         };
  
         var slider = new Slider("#q1", options);
