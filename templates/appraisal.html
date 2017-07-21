@@ -15,6 +15,7 @@
                 }).responseText;
                 
                 var options = {
+                    enableInteractivity: false,
                     backgroundColor: color,
                     legend: { position: "none" },
                         hAxis: { 
@@ -55,19 +56,37 @@
                 }).responseText;
 
                 var improvoptions = {
-                    
-                    vAxis: { ticks: [0,20,40,60,80,100]},
+                    enableInteractivity: false,
+                    vAxis: { 
+                        ticks: [0,20,40,60,80,100],
+                        title: '% improvement',
+                        minorGridlines: { count: 1}
+                    },
+                    hAxis: { title: 'Delegates'},
                     backgroundColor: 'eee',
                     legend: 'none',
                     bar: { groupWidth: '98%' }, // Remove space between bars.
+                    chartArea: { top: 25 },
                     candlestick: {
                         fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
                         risingColor: { strokeWidth: 0, fill: '#blue' }   // green
                     }
                 };
-                
+                function placeMarker(dataTable) {
+                    var cli = this.getChartLayoutInterface();
+                    var chartArea = cli.getChartAreaBoundingBox();
+                    
+                    {% for n in range(responses) %}
+                        document.querySelector('.overlay-marker{{n+1}}').style.top = Math.floor(cli.getYLocation(dataTable.getValue({{ n }}, 1))) - 32 + "px";
+                        document.querySelector('.overlay-marker{{n+1}}').style.left = Math.floor(cli.getXLocation({{ n }})) - 16 + "px";
+                    {% endfor %}
+                };
+
+            
             var improvdata = new google.visualization.DataTable(jsonImprovData);
             var improvchart = new google.visualization.CandlestickChart(document.getElementById('chart13'));
+            google.visualization.events.addListener(improvchart, 'ready', placeMarker.bind(improvchart, improvdata));
+
             improvchart.draw(improvdata, improvoptions);
             }
 
@@ -119,10 +138,17 @@
                 <div class="col-md-4 left">
                     <h2>Improvement</h2>
                     <hr>
-                    
+                    <p>This graph shows the delegates reported knowledge and skills before and after the course</p>
                 </div>
                 <div class="col-md-8">
-                    <div id="chart13" style="min-height: 400px; margin-top: 50px"></div>
+                    <div class="chartWithOverlay">
+                        <div id="chart13" style="min-height: 400px; margin-top: 50px"></div>
+                        {% for n in range(responses) %}
+                            <div class="overlay-marker{{n+1}}">
+                                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="font-size: 30;color:eee"></span>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,5 +279,23 @@
         }
         getStuff(chart,start,end,title,color);
     }
+        var doit;
+        window.addEventListener('resize', function(event){
+            clearTimeout(doit);
+            doit = setTimeout(startStuff, 300);
+        });
 
 </script>
+
+{% for n in range(responses) %}
+ <style>
+     .overlay-marker{{ n + 1 }} {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 53px;   /* chartArea top */
+    left: 528px; /* chartArea left */
+}
+</style>   
+{% endfor %}
+

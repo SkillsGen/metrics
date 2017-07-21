@@ -279,3 +279,15 @@ a.anchor {
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
 }
+
+.chartWithOverlay {
+    position: relative;
+    
+}
+.overlay {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 60px;  /* chartArea top  */
+    left: 180px; /* chartArea left */
+}

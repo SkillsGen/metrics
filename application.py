@@ -321,7 +321,7 @@ def data(message=""):
             i = 0
             for row in improv:
                 vals = row['q13'].split(',')
-                delegate = "del" + str(i)
+                delegate = "del" + str(i + 1)
                 low = int(vals[0])
                 high = int(vals[1])
                 
