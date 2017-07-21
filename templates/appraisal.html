@@ -46,6 +46,32 @@
                 return a.toString() + "%";
             };
             
+            function drawImprov() {
+                dataurl = "{{ url_for('data')}}?improv=1"
+                var jsonImprovData = $.ajax({
+                    url: dataurl,
+                    dataType: "json",
+                    async: false
+                }).responseText;
+
+                var improvoptions = {
+                    
+                    vAxis: { ticks: [0,20,40,60,80,100]},
+                    backgroundColor: 'eee',
+                    legend: 'none',
+                    bar: { groupWidth: '98%' }, // Remove space between bars.
+                    candlestick: {
+                        fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                        risingColor: { strokeWidth: 0, fill: '#blue' }   // green
+                    }
+                };
+                
+            var improvdata = new google.visualization.DataTable(jsonImprovData);
+            var improvchart = new google.visualization.CandlestickChart(document.getElementById('chart13'));
+            improvchart.draw(improvdata, improvoptions);
+            }
+
+            
         </script>
   </head>
 <body>
@@ -91,14 +117,12 @@
             <div class="row">
                 <a name="classroom" class="anchor"></a>
                 <div class="col-md-4 left">
-                    <h2>Classroom</h2>
+                    <h2>Improvement</h2>
                     <hr>
-                    <div class="list-group">
-                        <button onclick="btnclk(1,1,1,1,'Classroom','eee')" id="b1" type="button" class="list-group-item active"><b>Q1: </b>How would you rate the classroom environment?</button>
-                    </div>
+                    
                 </div>
                 <div class="col-md-8">
-                    <div id="chart1" style="min-height: 400px; margin-top: 50px"></div>
+                    <div id="chart13" style="min-height: 400px; margin-top: 50px"></div>
                 </div>
             </div>
         </div>
@@ -154,10 +178,25 @@
                 </div>
             </div>
         </div>
-        <div class="jumbotron text-center" style="padding-top:10px; padding-right: 15px">
+    <div class="jumbotron chartjumbo">
+            <div class="row">
+                <a name="classroom" class="anchor"></a>
+                <div class="col-md-4 left">
+                    <h2>Classroom</h2>
+                    <hr>
+                    <div class="list-group">
+                        <button onclick="btnclk(1,1,1,1,'Classroom','eee')" id="b1" type="button" class="list-group-item active"><b>Q1: </b>How would you rate the classroom environment?</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="chart1" style="min-height: 400px; margin-top: 50px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="jumbotron text-center" style="background-color:white;padding-top:10px; padding-right: 15px">
             <a name="etc" class="anchor"></a>
             <h2>The delegates own assessment of the course including any areas of improvement</h2>
-            <hr style="border-color: white">
+            <hr>
             <div class="row ans">
                 {% for row in q12 %}
                     {% if row.q12 != '' %}
@@ -179,7 +218,7 @@
 </footer> 
 </html>
 <script>
-    function getStuff(chart, start, end, title) {
+    function getStuff(chart, start, end, title, color) {
         arg ="";
         var b = 0;
         for (var i = 1; i <= end; i++) {
@@ -192,7 +231,7 @@
             }
         }
         chart = "chart" + chart;
-        drawStuff(arg,chart, title);
+        drawStuff(arg,chart, title, color);
     }
     function startStuff() {
         drawStuff('11111111111',"chart0", "Overall:", "ffffff");
@@ -200,6 +239,7 @@
         drawStuff('01111000000',"chart2", "Instructor:", "ffffff");
         drawStuff('00000111000',"chart3", "Content:", "eee");
         drawStuff('00000000111',"chart4", "Learning Effectiveness:", "ffffff");
+        drawImprov();
     }
     google.charts.setOnLoadCallback(startStuff);
     
@@ -213,4 +253,5 @@
         }
         getStuff(chart,start,end,title,color);
     }
+
 </script>

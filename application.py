@@ -258,17 +258,19 @@ def appraisal(message=""):
 @login_required
 def data(message=""):
     if request.method == "GET":
-        schema = [("label", "string"), 
-                  ("value", "number")
-                 ]
+        if request.args.get('q') != None:
+            schema = [("label", "string"),
+                      ("value", "number")
+                     ]
 
-        data = [["Excellent", 0],
-                ["Good", 0],
-                ["Satisfactory", 0],
-                ["Below Average", 0],
-                ["Poor", 0],
-               ] 
-        if request.args.get('q') != "None":
+            data = [["Excellent", 0],
+                    ["Good", 0],
+                    ["Satisfactory", 0],
+                    ["Below Average", 0],
+                    ["Poor", 0]
+                   ] 
+            
+            
             qs = request.args.get("q")
             qs = list(qs)
             j = 0
@@ -298,12 +300,43 @@ def data(message=""):
                 try:
                     val[1] = val[1] / (len(metrics) * a) * 100
                 except: val[1] = 0
+                    
+            data_table = gviz_api.DataTable(schema)
+            data_table.LoadData(data)
 
-        data_table = gviz_api.DataTable(schema)
-        data_table.LoadData(data)
+            return data_table.ToJSon()
+        
+        elif request.args.get('improv') == "1":
+            schema = [("label", "string"),
+                      ("low", "number"),
+                      ("open", "number"),
+                      ("close", "number"),
+                      ("high", "number")
+                     ]
+            improv = db.execute("SELECT q13 FROM metrics WHERE bookingid = :bookingid",
+                                    bookingid = session.get('bookingid')
+                                    )
+            
+            data = []
+            i = 0
+            for row in improv:
+                vals = row['q13'].split(',')
+                delegate = "del" + str(i)
+                low = int(vals[0])
+                high = int(vals[1])
+                
+                data.append([delegate,low,low,high,high])
+                i = i + 1
+                
+                
+            data_table = gviz_api.DataTable(schema)
+            data_table.LoadData(data)
 
-        return data_table.ToJSon()
-        #return render_template("test.html", test=questions)
+            return data_table.ToJSon()
+            #return render_template("test.html", test=improv)
+            
+        else:
+            return "error"    
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
