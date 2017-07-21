@@ -320,7 +320,10 @@ def data(message=""):
             data = []
             i = 0
             for row in improv:
-                vals = row['q13'].split(',')
+                try:
+                    vals = row['q13'].split(',')
+                except:
+                    vals= [0,0]
                 delegate = "del" + str(i + 1)
                 low = int(vals[0])
                 high = int(vals[1])
