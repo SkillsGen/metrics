@@ -2,6 +2,7 @@
     <head>
         <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"/>
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
@@ -237,11 +238,27 @@
         
     </body>
 
-<footer class="container-fluid text-center">
-    <a href="#overall" title="To Top">
-        <span class="glyphicon glyphicon-chevron-up" style="margin-bottom: 20px"></span>
-    </a>
-</footer> 
+<footer id="myFooter">
+        <div class="container">
+            <div class="row" style="text-align:center">
+                <div class="col-sm-6">
+                    <h2 style="letter-spacing:4px; color: white; padding-top: 12px">SkillsGen</h2>
+                </div>
+                <div class="col-sm-6">
+                    <div class="social-networks">
+                        <a href="https://twitter.com/skillsgenltd" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/OfficialSkillsGen/" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/company/skillsgen" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                    </div>
+                    <button type="button" class="btn btn-default" onclick="location.href='mailto:admin@skillsgen.com'">Contact us</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2017</p>
+            
+        </div>
+    </footer>
 </html>
 <script>
     function getStuff(chart, start, end, title, color) {

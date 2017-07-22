@@ -222,7 +222,7 @@ def mq(message=""):
                         )
         
         session.clear()
-        return "Thank you for your feedback"
+        return redirect(url_for('thankyou'))
     
     elif session['admin'] == 1:
         return "No questionaire for admin"
@@ -232,6 +232,12 @@ def mq(message=""):
                                 bookingid = session.get("bookingid")
                                 )
         return render_template("mq.html", booking = booking[0])
+    
+@app.route("/thankyou", methods=["GET"])
+@login_required
+def thankyou(message=""):
+    session.clear()
+    return render_template("thankyou.html")
 
 @app.route("/appraisal", methods=["GET", "POST"])
 @login_required

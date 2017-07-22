@@ -15,6 +15,7 @@ body {
     padding-left: 0px;
     padding-right: 0px;
   background-color: #FFFFFF;
+    height: 100%;
     
 }
 
@@ -290,4 +291,103 @@ a.anchor {
     position: absolute;
     top: 60px;  /* chartArea top  */
     left: 180px; /* chartArea left */
+}
+
+#myFooter {
+    
+    background-color: #3c3d41;
+    padding-top: 10px;
+}
+
+#myFooter .footer-copyright {
+    background-color: black;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    color: white;
+}
+
+#myFooter .row {
+    margin-bottom: 10px;
+}
+
+
+#myFooter .footer-copyright p {
+    margin: 0px;
+    color: #ccc;
+}
+
+#myFooter a {
+    color: #d2d1d1;
+    text-decoration: none;
+}
+
+#myFooter a:hover,
+#myFooter a:focus {
+    text-decoration: none;
+    color: white;
+}
+
+#myFooter .social-networks {
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 10px;
+}
+
+#myFooter .social-networks a {
+    font-size: 32px;
+    color: white;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+#myFooter .social-networks a:hover {
+    text-decoration: none;
+}
+
+#myFooter .facebook:hover {
+    color: #0077e2;
+}
+
+#myFooter .linkedin:hover {
+    color: #0077e2;
+}
+
+#myFooter .twitter:hover {
+    color: #00aced;
+}
+
+#myFooter .btn {
+    color: white;
+    background-color: #d84b6b;
+    border-radius: 20px;
+    border: none;
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 0px;
+    line-height: 25px;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    height: 100%;
+}
+
+.content{
+   flex: 1 0 auto;
+   -webkit-flex: 1 0 auto;
+   min-height: 200px;
+}
+
+#myFooter{
+   flex: 0 0 auto;
+   -webkit-flex: 0 0 auto;
 }

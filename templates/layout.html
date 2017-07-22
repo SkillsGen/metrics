@@ -14,6 +14,7 @@
     <!-- Bootstrap core CSS -->
       
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"/>
+      <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
       <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-slider.css') }}"/>  
      <link rel="stylesheet" href="{{ url_for('static', filename='fullcalendar/fullcalendar.css') }}"/> 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -34,9 +35,7 @@
     <![endif]-->
   </head>
 
-<body>
-            <main>
+
                 {% block main %}{% endblock %}
-            </main>
-    </body>
+        
 </html>
