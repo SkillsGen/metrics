@@ -234,7 +234,6 @@ def mq(message=""):
         return render_template("mq.html", booking = booking[0])
     
 @app.route("/thankyou", methods=["GET"])
-@login_required
 def thankyou(message=""):
     session.clear()
     return render_template("thankyou.html")
