@@ -111,24 +111,24 @@ def index(message=""):
                                 date = request.form.get("date")
                                 )
         if len(request.form.get('code')) == 7:
-            if booking[0]['bookcode'] == request.form.get('code'):
-                if session.get("admin") != 1:
-                    session["user_id"] = 0
-                    session["admin"] = 0
-                    session["bookingid"] = booking[0]['id']
-                return redirect(url_for('appraisal'))
-            else: 
-                return "Sorry that code doesn't match."
+            for row in booking:
+                if row['bookcode'] == request.form.get('code'):
+                    if session.get("admin") != 1:
+                        session["user_id"] = 0
+                        session["admin"] = 0
+                        session["bookingid"] = row['id']
+                    return redirect(url_for('appraisal'))
+            return "Sorry that code doesn't match a booking on that date."
         
         elif len(request.form.get('code')) == 5:
-            if booking[0]['delcode'] == request.form.get('code'):
-                if session.get("admin") != 1:
-                    session["user_id"] = 0
-                    session["admin"] = 0
-                    session["bookingid"] = booking[0]['id']
-                return redirect(url_for('mq'))
-            else:
-                return "Sorry that code doesn't match."
+            for row in booking:
+                if row['delcode'] == request.form.get('code'):
+                    if session.get("admin") != 1:
+                        session["user_id"] = 0
+                        session["admin"] = 0
+                        session["bookingid"] = row['id']
+                    return redirect(url_for('mq'))
+            return "Sorry that code doesn't match a booking on that date."
         
         else:
             return "So that code is not the right length."
