@@ -329,13 +329,17 @@ def data(message=""):
                     vals = row['q13'].split(',')
                 except:
                     vals= [0,0]
-                delegate = "del" + str(i + 1)
+                delegate = "Del" + str(i + 1)
                 low = int(vals[0])
                 high = int(vals[1])
                 
                 data.append([delegate,low,low,high,high])
                 i = i + 1
                 
+            if len(data) < 6:
+                for i in range(len(data),6):
+                    delegate = "Del" + str(i + 1)
+                    data.append([delegate,0,0,0,0])
                 
             data_table = gviz_api.DataTable(schema)
             data_table.LoadData(data)
