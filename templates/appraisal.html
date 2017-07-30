@@ -224,17 +224,19 @@
             <a name="etc" class="anchor"></a>
             <h2>The delegates own assessment of the course including any areas of improvement</h2>
             <hr>
-            <div class="row ans">
-                {% for row in q12 %}
-                    {% if row.q12 != '' %}
+            
+                {% for row in q12|batch(3) %}
+                <div class="row ans">
+                    {% for column in row %}
                         <div class="col-sm-4">
                             <span class="glyphicon glyphicon-wrench"></span>
-                            <p style="padding-top: 15px">{{ row.q12 }}</p>
+                            <p style="padding-top: 15px">{{ column.q12 }}</p>
                         </div>
-                    {% endif %}
+                    {% endfor %}
+            </div>
                 {% endfor %}
             </div>
-        </div>
+        
         
     </body>
 
