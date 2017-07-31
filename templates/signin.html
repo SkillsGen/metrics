@@ -86,15 +86,15 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>© 2017</p>
+            <p>© 2017 SkillsGen</p>
             
         </div>
     </footer>
 <script>
     $('#datepicker div').datepicker({
         startDate: "-1y",
-        todayHighlight: true,
-        todayBtn: true
+        todayHighlight: false,
+        todayBtn: false
     }).on('changeDate', function(e){
       $('#date').val(e.format('yyyy-mm-dd'))
     }); 
