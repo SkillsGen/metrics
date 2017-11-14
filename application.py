@@ -105,7 +105,7 @@ def index(message=""):
                                 date = request.form.get("date")
                                 )
         if exists[0]['exists'] == False:
-            return "Sorry no booking was found on that date."
+            return render_template("sorry.html", error = "Sorry, but no booking was found on that date.")
         
         booking = db.execute("SELECT * FROM bookings WHERE date = :date",
                                 date = request.form.get("date")
@@ -118,7 +118,9 @@ def index(message=""):
                         session["admin"] = 0
                         session["bookingid"] = row['id']
                     return redirect(url_for('appraisal'))
-            return "Sorry that code doesn't match a booking on that date."
+            return render_template("sorry.html", error = "Sorry that code doesn't match a booking on that date.") 
+        
+        
         
         elif len(request.form.get('code')) == 5:
             for row in booking:
@@ -128,10 +130,10 @@ def index(message=""):
                         session["admin"] = 0
                         session["bookingid"] = row['id']
                     return redirect(url_for('mq'))
-            return "Sorry that code doesn't match a booking on that date."
+            return render_template("sorry.html", error = "Sorry that code doesn't match a booking on that date.")
         
         else:
-            return "So that code is not the right length."
+            return render_template("sorry.html", error = "Sorry that code is incorrect.")
         
     else:
         return render_template("signin.html")
